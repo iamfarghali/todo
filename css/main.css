@@ -1,0 +1,247 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color:#a1a1a1;
+    font-family: 'Oxygen', sans-serif;
+}
+
+ul {
+    list-style: none;
+}
+a {
+	text-decoration: none;
+}
+button {
+	background: transparent;
+	border: 0;
+}
+button:focus {
+	outline: 0;
+}
+
+.main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 560px;
+    margin: auto;
+    margin-top: 50px;
+    border: 1px solid #cac9c9;
+    border-radius: 8px;
+}
+
+.header {
+	position: relative;
+	width: 100%;
+	height: 101px;
+	border-bottom: 1px solid #cac9c9;
+
+}
+.header h1 {
+	height: 50px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 25px;
+	line-height: 50px;
+	border-bottom: 1px solid #cac9c9;
+	color:#5a7cce;
+}
+.header input {
+	height: 50px;
+	width: calc(100% - 50px);
+	padding:8px 15px;
+	font-size: 18px;
+	border: none;
+	border-bottom-left-radius: 8px;
+}
+.header input:focus {
+	outline: none;
+}
+.header button.add {
+	position: absolute;
+	top: 50%;
+	right: 0px;
+	width: 50px;
+	height: 50px;
+	cursor: pointer;
+	border-left: 1px solid #cac9c9;
+}
+.header button.add span {
+	font-size: 23px;
+	text-align: center;
+	line-height: 50px;
+	color: #5a7cce;
+}
+
+section.tasks {
+	transition: all 0.3s ease-in-out;
+}
+.todo-list .todo {
+	position: relative;
+	width: 100%;
+	height: 50px;
+	border-bottom: 1px solid #cac9c9;
+ 	transition: all 0.3s ease-in-out;
+}
+input.edit {
+	position: relative;
+	width: 100%;
+	height: 50px;
+	padding:8px 15px;
+	font-size: 18px;
+	border: none;
+	border-bottom: 1px solid #cac9c9;
+ 	transition: all 0.3s ease-in-out;
+ 	display: none;
+}
+input.active {
+	display: block;
+}
+
+.view {
+	padding: 12px 0px 0px 20px;
+}
+div.view.hide {
+	display: none;
+}
+
+.task-container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #a2a2a2;
+}
+
+.task-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.checkmark {
+    position: absolute;
+    left: 2px;
+    top: 1px;
+    height: 20px;
+    width: 20px;
+    border: 1px solid #2196F3;
+    border-radius: 50%;
+    background-color: transparent;
+}
+
+.task-container:hover input~.checkmark {
+    background-color: #f9f9f9;
+}
+
+.task-container input:checked~.checkmark {
+    background-color: #2196F3;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.task-container input:checked~.checkmark:after {
+    display: block;
+}
+
+.task-container .checkmark:after {
+    left: 5px;
+    top: 1px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.completed {
+	background-color: #f3f3f3;
+
+}
+
+button.delete {
+	position: absolute;
+	top: 24%;
+	right: 20px;
+	display: none;
+}
+.delete span {
+	cursor: pointer;
+	font-size: 18px;
+	color: #a7a7a7;
+	width: 25px;
+	height: 25px;
+	border: 1px solid #a7a7a7;
+	line-height: 25px;
+	border-radius: 50%;
+}
+
+.todo:hover button.delete {
+	display: block;
+}
+.delete:hover span {
+	color: #fd6060;
+	border: 1px solid #fb7d7d;
+}
+
+.footer {
+	position: relative;
+	width: 100%;
+	height: 60px;
+	border-bottom-left-radius: 8px; 
+	border-bottom-right-radius: 8px; 
+}
+
+.footer ul {
+	display: inline-block;
+}
+.footer ul li {
+	float: left;
+	margin-right: 8px;
+}
+.footer ul, .footer span, .footer button {
+	position: absolute;
+	top:30%;
+}
+
+.footer span {
+	left: 20px;
+	min-width:80px;
+}
+
+.footer ul {
+	left: 145px;
+	width: 240px;
+}
+.footer ul li:first-child {
+	margin-left: 18px;
+}
+.footer ul li {
+	margin-right: 20px; 
+}
+.footer ul li:last-child {
+	margin-right: 0;
+}
+
+.footer button {
+	right: 0px;
+	width: 160px;
+	cursor: pointer;
+	font-size: 16px; 
+}
+
+.selected {
+	padding-bottom: 2px;
+	border-bottom: 2px solid #5a7cce;
+}
+
+

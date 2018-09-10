@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ToDo List</title>
+    <link href="https://fonts.googleapis.com/css?family=Oxygen" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/vendor/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script src="js/vendor/vue.js"></script>
+</head>
+
+<body>
+    <section class="todoapp">
+        <section class="main">
+            <header class="header">
+                <h1>Todo List</h1>
+                <input v-model="newTitle" @keyup.enter="addTask()" type="text" class="new-task" autocomplete="off" placeholder="What need to be done?">
+                <button type="submit" class="add" @click="addTask()">
+                    <span class="fa fa-plus"></span>
+                </button>
+            </header>
+            <section class="tasks"> 
+                <ul class="todo-list">
+                    <li class="todo" v-for="task in filterdTasks" :class="{completed:task.completed}">
+                    	<input v-model="task.title" type="text" class="edit" :class="task.edit" @keyup.enter="doneEditing(task)">
+                        <div class="view" :class="{hide:task.edit == 'active'}">
+                            <label class="task-container">
+                            	<span @dblclick="editInput(task)">{{task.title}}</span>
+                                <input type="checkbox" v-model="task.completed">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <button type="submit" class="delete" @click="deleteTask(task)">
+                            <span class="fa fa-close"></span>
+                        </button>
+                    </li>
+                </ul>
+            </section>
+            <footer class="footer">
+        		<span class="task-count">
+				 <strong>{{remainingTasks}}</strong>&nbsp; {{taskOrTasks}} Left
+				</span>
+                <ul class="filters">
+                    <li><a href="#" @click.prevent="visibility='all'" :class="{selected:visibility == 'all'}">All</a></li>
+                    <li><a href="#" @click.prevent="visibility='active'" :class="{selected:visibility == 'active'}">Active</a></li>
+                    <li><a href="#" @click.prevent="visibility='completed'" :class="{selected:visibility == 'completed'}">Completed</a></li>
+                </ul>
+                <button type="submit" class="clear-completed" @click="removeCompleted()">Clear Completed</button>
+            </footer>
+        </section>
+    </section>
+    <script>
+    var filters = {
+    	'all': function(tasks) {
+    		return tasks;
+    	},
+    	'active': function(tasks) {
+    		return tasks.filter(function(task) {
+    			return !task.completed;
+    		});
+    	},
+    	'completed': function(tasks) {
+    		return tasks.filter(function(task) {
+    			return task.completed;
+    		});
+    	}
+    }	
+
+    var task_storage = {
+    	fetch: function() {
+    		var tasks = JSON.parse(localStorage.getItem('task') || '[]');
+    		return tasks;
+    	},
+    	save: function(tasks) {
+    		localStorage.setItem('task', JSON.stringify(tasks));
+    	}
+    }
+
+
+
+    new Vue({
+        'el': '.todoapp',
+        'data': {
+            tasks: task_storage.fetch(),
+            newTitle: '',
+            visibility: 'all',
+            isActive: false,
+        },
+        'methods': {
+            deleteTask: function(task) {
+                this.tasks.splice(this.tasks.indexOf(task), 1);
+            },
+            addTask: function() {
+                if (this.newTitle == '')
+                    return;
+                this.tasks.push({
+                    'title': this.newTitle,
+                    'completed': false, 
+                    'edit': ''
+                });
+                this.newTitle = '';
+            },
+            removeCompleted: function() {
+            	this.tasks = filters.active(this.tasks);
+            },
+            editInput: function(task) {
+            	task.edit = 'active';
+            },
+            doneEditing: function(task) {
+            	if (task.title == '')
+            		this.deleteTask(task);
+            	task.edit = '';
+            }
+        },
+        'computed': {
+        	filterdTasks: function() {
+        		return filters[this.visibility] (this.tasks);
+        	},
+        	remainingTasks: function() {
+        		return filters.active(this.tasks).length;
+        	},
+        	taskOrTasks: function() {
+        		if (filters.active(this.tasks).length > 1)
+        			return 'Tasks';
+        		return 'Task';
+        	}
+        },
+        'watch': {
+        	tasks: {
+        		handler: function(task) {
+	        		task_storage.save(task);
+        		},
+	        	deep:true
+	        }
+        	
+        }
+    });
+    </script>
+</body>
+
+</html>
